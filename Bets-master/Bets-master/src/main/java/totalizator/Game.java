@@ -1,6 +1,5 @@
 package totalizator;
 
-
 import exeption.MarginException;
 import exeption.NameException;
 import exeption.ProbException;
@@ -14,21 +13,16 @@ public class Game {
     private LinkedList<Member> members = new LinkedList<Member>();
     private String winner;
 
-    public Game(double margin) {
-        
-        try {
+    public Game(double margin) throws MarginException {
+
             if (margin < 1 & margin > 20) {
                 throw new MarginException();
             }
             this.margin = margin;
 
-        } catch (MarginException e) {
-            System.out.println(e.toString());
-        }
     }
 
-    public void addMember(Member participant) {
-        try {
+    public void addMember(Member participant) throws NameException {
             if (this.members.isEmpty()) {
                 this.members.add(participant);
             } else {
@@ -39,12 +33,9 @@ public class Game {
                 }
                 this.members.add(participant);
             }
-        } catch (NameException e) {
-            System.out.println(e.toString());
-        }
     }
 
-    public void addBet(Bet bet) {
+    public void addBet(Bet bet) throws ProbException {
         double totalProb = 0;
         for (Member m : this.members) {
             if (bet.getTeamName().equals(m.getName())) {
@@ -52,7 +43,7 @@ public class Game {
             }
         }
 
-        try {
+
             for (Member m : this.members) {
                 totalProb = totalProb + m.getProb();
             }
@@ -61,17 +52,14 @@ public class Game {
             }
         bet.getClient().setBill(bet.getClient().getBill() - bet.getSum());
         this.bets.add(bet);
-        } catch (ProbException e) {
-            System.out.println(e.toString());
-        }
     }
 
     public void setMargin(double margin) {
         this.margin = margin;
     }
 
-    public void setWinner() {
-        this.winner = "Olivia";
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 
     public void showResult() {

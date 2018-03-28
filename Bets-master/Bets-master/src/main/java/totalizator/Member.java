@@ -8,8 +8,6 @@ public class Member {
     public Member(String name, double prob) {
         this.name = name;
         this.prob = prob;
-
-
     }
 
     public void setProb(double prob) {

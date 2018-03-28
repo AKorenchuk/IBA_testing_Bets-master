@@ -8,19 +8,14 @@ public class Bet {
     private String teamName;
     private double kf;
 
-    public Bet(Client client, double sum, String teamName) {
+    public Bet(Client client, double sum, String teamName) throws SumException {
 
-        try {
             if (sum > client.getBill()) {
                 throw new SumException();
             }            
             this.cl = client;
             this.sum = sum;
             this.teamName = teamName;
-
-        } catch (SumException e) {
-            System.out.println(e.toString());
-        }
     }
 
     public void setKfc(double kfc) {
