@@ -23,6 +23,7 @@ public class BetTest {
     public void createBetTest() throws SumException {
         Bet bet = new Bet(client,10,"DINAMO MINSK");
         assertEquals("Korenchuk Anna",bet.getClient().getName());
+        Assert.assertTrue(100.6 == bet.getClient().getBill());
         Assert.assertTrue(10 == bet.getSum());
         assertEquals("DINAMO MINSK",bet.getTeamName());
     }
@@ -33,14 +34,44 @@ public class BetTest {
         bet = new Bet(client,10,"DINAMO MINSK");
     }
 
-    @Test(expected = Exception.class )
+    @Test(expected = SumException.class )
     public void checkSumNegative() throws SumException {
         bet = new Bet(client,-13,"DINAMO MINSK");
     }
 
-    @Test(expected = Exception.class )
+    @Test(expected = SumException .class )
     public void checkSumNull() throws SumException {
         bet = new Bet(client,0,"DINAMO MINSK");
+    }
+
+    @Test
+    public void checkSetMaxKfs()  {
+        bet.setKfc(100);
+        Assert.assertTrue(100 == bet.getKf());
+    }
+
+
+    @Test
+    public void checkSetMinKfs()  {
+        double kfs = 100 / 120;
+        bet.setKfc(kfs);
+        Assert.assertTrue(kfs == bet.getKf());
+    }
+
+    @Test (expected = Exception .class )
+    public void checkSetKfsMoreThanMax()  {
+        bet.setKfc(1000);
+        Assert.assertTrue(1000 == bet.getKf());
+    }
+
+    @Test(expected = Exception .class )
+    public void checkSetKfsNull()  {
+        bet.setKfc(0);
+    }
+
+    @Test(expected = Exception .class )
+    public void checkSetKfsNegative() {
+        bet.setKfc(-13);
     }
 
 }

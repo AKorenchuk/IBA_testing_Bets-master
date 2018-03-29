@@ -7,7 +7,6 @@ public class Client {
     private double bill;
 
     public Client(String clientName, double bill) throws BillException {
-        
 
             if (bill < 0) {
                 throw new BillException();

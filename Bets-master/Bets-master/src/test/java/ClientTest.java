@@ -23,8 +23,13 @@ public class ClientTest {
     }
 
     @Test(expected  =  BillException.class )
-    public void checkSetBill(){
+    public void checkSetNegativeBill(){
         client.setBill(-12.3);
+    }
+
+    @Test(expected  =  BillException.class )
+    public void checkConstructorWhenNegativeBill() throws BillException {
+        client = new Client("Korenchuk Anna", -12.3);
     }
 
 }

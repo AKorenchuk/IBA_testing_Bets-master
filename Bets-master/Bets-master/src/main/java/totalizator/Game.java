@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 public class Game {
 
+
     private double margin;
     private LinkedList<Bet> bets = new LinkedList<Bet>();
     private LinkedList<Member> members = new LinkedList<Member>();

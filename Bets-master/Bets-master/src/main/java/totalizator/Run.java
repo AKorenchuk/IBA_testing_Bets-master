@@ -1,13 +1,11 @@
 package totalizator;
 
-import exeption.BillException;
-import exeption.MarginException;
-import exeption.SumException;
+import exeption.*;
 
 public class Run {
     
         
-    public static void main(String args[]) throws SumException, BillException, MarginException {
+    public static void main(String args[]) throws SumException, BillException, MarginException, NameException, ProbException {
 
         Client client1 = new Client("Ann", 20);
         Client client2 = new Client("Tom", 40);
@@ -32,7 +30,7 @@ public class Run {
         game.addBet(bet3);
         
         System.out.println("Current client bill: " + client3.getBill());
-        game.setWinner();
+        game.setWinner("Olivia");
         game.showResult();
 
 

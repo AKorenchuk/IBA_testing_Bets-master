@@ -1,4 +1,3 @@
-
 import org.junit.Assert;
 import org.junit.Before;
 import  org.junit.Test;
@@ -40,16 +39,35 @@ public class MemberTest {
     }
 
     @Test(expected  =  Exception.class )
+    public void checkConstructorWhenProbNegative(){
+        Member member = new Member("DINAMO",-40);
+    }
+
+    @Test(expected  =  Exception.class )
     @Theory
-    public void checkSetProbMoreThan(@FromDataPoints("meansMoreThanMax") double mean){
+    public void checkSetProbMoreThanMax(@FromDataPoints("meansMoreThanMax") double mean){
         participant.setProb(mean);
     }
 
+    @Test(expected  =  Exception.class )
+    @Theory
+    public void checkConstructorWhenProbMoreThanMax(@FromDataPoints("meansMoreThanMax") double mean){
+        Member member = participant = new Member("DINAMO",mean);
+    }
 
+
+    @Test
     @Theory
     public void checkSetProbBorder(@FromDataPoints("border") double mean){
         participant.setProb(mean);
         Assert.assertTrue(mean == participant.getProb());
+    }
+
+    @Test
+    @Theory
+    public void checkConstructorWhenProbBorder(@FromDataPoints("border") double mean){
+        Member member =  new Member("DINAMO",mean);
+        Assert.assertTrue(mean == member.getProb());
     }
 
 }
