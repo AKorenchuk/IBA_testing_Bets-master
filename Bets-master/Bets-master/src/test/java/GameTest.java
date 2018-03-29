@@ -1,5 +1,4 @@
 import exeption.*;
-import org.junit.Assert;
 import org.junit.Before;
 import  org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
@@ -56,8 +55,6 @@ public class GameTest {
     public void checkSetMarginMoreThan(@FromDataPoints("meansMoreThanMax") double mean){
         game.setMargin(mean);
     }
-
-
 
 
     @Test
@@ -125,6 +122,52 @@ public class GameTest {
         game.addMember(member2);
         Client client1 = new Client("Korenchuk Anna", 100.6);
         Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
+        game.addBet(bet1);
+    }
+
+    @Test (expected  =  Exception.class )
+    public void checkUniqueBetsOnOneTeam() throws NameException, BillException, SumException, ProbException {
+        Member member1 = new Member("DINAMO MINSK",60);
+        Member member2 = new Member("DINAMO BREST",40);
+        game.addMember(member1);
+        game.addMember(member2);
+        Client client1 = new Client("Korenchuk Anna", 100.6);
+        Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
+        game.addBet(bet1);
+        game.addBet(bet1);
+    }
+
+    @Test (expected  =  Exception.class )
+    public void checkUniqueBetsOnDifferentTeam() throws NameException, BillException, SumException, ProbException {
+        Member member1 = new Member("DINAMO MINSK",60);
+        Member member2 = new Member("DINAMO BREST",40);
+        game.addMember(member1);
+        game.addMember(member2);
+        Client client1 = new Client("Korenchuk Anna", 100.6);
+        Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
+        Bet bet2 = new Bet(client1, 20, "DINAMO BREST");
+        game.addBet(bet1);
+        game.addBet(bet1);
+    }
+
+    @Test (expected  =  Exception.class )
+    public void checkOnlyOneMember() throws NameException, BillException, SumException, ProbException {
+        Member member1 = new Member("DINAMO MINSK",100);
+        game.addMember(member1);
+        Client client1 = new Client("Korenchuk Anna", 100.6);
+        Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
+        game.addBet(bet1);
+    }
+
+
+    @Test (expected  =  Exception.class )
+    public void checkAnotherMember() throws NameException, BillException, SumException, ProbException {
+        Member member1 = new Member("DINAMO MINSK",60);
+        Member member2 = new Member("DINAMO BREST",40);
+        game.addMember(member1);
+        game.addMember(member2);
+        Client client1 = new Client("Korenchuk Anna", 100.6);
+        Bet bet1 = new Bet(client1, 10, "DINAMO GRODNO");
         game.addBet(bet1);
     }
 }
