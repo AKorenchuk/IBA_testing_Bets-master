@@ -1,4 +1,4 @@
-import exeption.MarginException;
+import exeption.*;
 import org.junit.Assert;
 import org.junit.Before;
 import  org.junit.Test;
@@ -7,7 +7,12 @@ import org.junit.experimental.theories.FromDataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
+import totalizator.Bet;
+import totalizator.Client;
 import totalizator.Game;
+import totalizator.Member;
+
+import java.util.LinkedList;
 
 @RunWith(Theories.class)
 public class GameTest {
@@ -25,7 +30,7 @@ public class GameTest {
         game = new Game(10);
     }
 
-    @Before
+    @Test
     public void createEpmtyGame() throws MarginException {
         game = new Game(10);
     }
@@ -77,6 +82,49 @@ public class GameTest {
         Game play = new Game(mean);
     }
 
+    private LinkedList<Bet> bets = new LinkedList<Bet>();
+    LinkedList<Member> members = new LinkedList<Member>();
 
 
+    @Test
+    public void checkAddMembersPositive() throws NameException {
+        Member member1 = new Member("DINAMO MINSK",10);
+        Member member2 = new Member("DINAMO BREST",25);
+        game.addMember(member1);
+        game.addMember(member2);
+    }
+
+
+    @Test (expected  =  NameException.class )
+    public void checkAddMembersNegative() throws NameException {
+        Member member1 = new Member("DINAMO MINSK",10);
+        game.addMember(member1);
+        game.addMember(member1);
+    }
+
+    @Test
+    public void checkAddBetsPositive() throws NameException, BillException, SumException, ProbException {
+        Member member1 = new Member("DINAMO MINSK",60);
+        Member member2 = new Member("DINAMO BREST",40);
+        game.addMember(member1);
+        game.addMember(member2);
+        Client client1 = new Client("Korenchuk Anna", 100.6);
+        Client client2 = new Client("Tochilo Anna", 106);
+        Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
+        Bet bet2 = new Bet(client2, 20, "DINAMO BREST");
+        game.addBet(bet1);
+        game.addBet(bet2);
+    }
+
+
+    @Test (expected  =  ProbException.class )
+    public void checkAddBetsNegative() throws NameException, BillException, SumException, ProbException {
+        Member member1 = new Member("DINAMO MINSK",30);
+        Member member2 = new Member("DINAMO BREST",10);
+        game.addMember(member1);
+        game.addMember(member2);
+        Client client1 = new Client("Korenchuk Anna", 100.6);
+        Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
+        game.addBet(bet1);
+    }
 }
