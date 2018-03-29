@@ -13,6 +13,8 @@ import totalizator.Member;
 
 import java.util.LinkedList;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(Theories.class)
 public class GameTest {
 
@@ -147,7 +149,7 @@ public class GameTest {
         Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
         Bet bet2 = new Bet(client1, 20, "DINAMO BREST");
         game.addBet(bet1);
-        game.addBet(bet1);
+        game.addBet(bet2);
     }
 
     @Test (expected  =  Exception.class )
@@ -170,4 +172,40 @@ public class GameTest {
         Bet bet1 = new Bet(client1, 10, "DINAMO GRODNO");
         game.addBet(bet1);
     }
+
+
+    @Test
+    public void checkGameResultPositive() throws NameException, BillException, SumException, ProbException {
+        Member member1 = new Member("DINAMO MINSK",60);
+        Member member2 = new Member("DINAMO BREST",40);
+        game.addMember(member1);
+        game.addMember(member2);
+        Client client1 = new Client("Korenchuk Anna", 100.6);
+        Client client2 = new Client("Tochilo Anna", 106);
+        Client client3 = new Client("Koshkina Sveta", 34);
+        Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
+        Bet bet2 = new Bet(client2, 20, "DINAMO MINSK");
+        Bet bet3 = new Bet(client3, 20, "DINAMO BREST");
+        game.addBet(bet1);
+        game.addBet(bet2);
+        game.addBet(bet3);
+        game.setWinner("DINAMO BREST");
+        assertEquals("Koshkina Sveta wins 40.0",game.showResult());
+    }
+
+    @Test (expected  =  Exception.class )
+    public void checkGameResultNegative() throws NameException, BillException, SumException, ProbException {
+        Member member1 = new Member("DINAMO MINSK",60);
+        Member member2 = new Member("DINAMO BREST",40);
+        game.addMember(member1);
+        game.addMember(member2);
+        Client client1 = new Client("Korenchuk Anna", 100.6);
+        Client client2 = new Client("Tochilo Anna", 106);
+        Bet bet1 = new Bet(client1, 10, "DINAMO MINSK");
+        Bet bet2 = new Bet(client2, 20, "DINAMO BREST");
+        game.addBet(bet1);
+        game.addBet(bet2);
+        game.setWinner("DINAMO GRODNO");
+    }
+
 }

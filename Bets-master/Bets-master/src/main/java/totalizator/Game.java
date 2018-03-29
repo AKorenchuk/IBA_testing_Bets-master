@@ -63,12 +63,13 @@ public class Game {
         this.winner = winner;
     }
 
-    public void showResult() {
+    public String showResult() {
         for (Bet b: this.bets){
             if(b.getTeamName().equals(this.winner)){
-                System.out.println(b.getClient().getName() + " wins " + b.getAward());
                  b.getClient().setBill(b.getSum() + b.getAward());
+                 return (b.getClient().getName() + " wins " + b.getAward());
             }
         }
+        return null;
     }
 }
